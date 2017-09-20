@@ -1,8 +1,7 @@
 /* global describe, it */
 /**
  *
- * Test cases for 
- *
+ * Test cases for Lalamove API
  *
  */
 'use strict'
