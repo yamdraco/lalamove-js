@@ -1,0 +1,25 @@
+{
+  "env": {
+    "browser": true
+  , "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
+  , "sourceType": "module"
+  , "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": "standard",
+  "rules": {
+    "global-require": 0,
+    "curly": 0,
+    "no-path-concat": 0,
+    "comma-style": 0,
+    "one-var": 0,
+    "space-before-function-paren": 0,
+    "operator-linebreak": 0,
+    "indent": 0,
+    "no-trailing-spaces": 0
+  }
+}
