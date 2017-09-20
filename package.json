@@ -1,0 +1,28 @@
+{
+  "name": "lalamove-js",
+  "version": "1.0.0",
+  "description": "Lalamove API to find driver for express delivery",
+  "main": "index.js",
+  "dependencies": {
+    "crypto-js": "3.1.9-1",
+    "superagent": "3.6.0",
+    "uuid": "3.1.0"
+  },
+  "devDependencies": {
+    "mocha": "3.5.3",
+    "chai": "4.1.2",
+    "lodash": "4.17.4"
+  },
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha -t 15000"
+  },
+  "keywords": [
+    "Lalamove",
+    "Delivery",
+    "Express",
+    "Easy",
+    "Van"
+  ],
+  "author": "Draco Yam",
+  "license": "MIT"
+}
