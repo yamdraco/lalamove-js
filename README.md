@@ -1,0 +1,22 @@
+# Lalamove Unofficial Client Library for Node.js
+## Library Maintenance
+This library is an unoffical library for lalamove api. Currently we are fixing all necessary bug and adding essential features to ensure the libary continues to meet your needs in accessing the Lalamove APIs. Non-critical issues will be closed. Any issue may be reopened if it is causing ongoing problem.
+
+## Requirements
+nil
+
+## Installation
+nil
+
+## How to Submit a bug, issue or feature request
+If you wish to submit a bug, issue, or feature request, then you can find the [issue here](https://github.com/yamdraco/lalamove-js/issues) and you can [create one here](https://github.com/yamdraco/lalamove-js/issues/new). For bug reporting, make sure you provide the following information
+1. Your node version and framework (if any)
+2. Your country and locale
+3. Clear steps to reproduce the bug (mainly header and body and url)
+4. A description of **what you expected to happen**
+5. A description of **what actually happened**
+
+## Releases
+nil
+
+
