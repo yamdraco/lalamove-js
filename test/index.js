@@ -14,6 +14,15 @@ const assert = require('chai').assert,
         country: 'SG'
       }
 
+let makeId = () => {
+  let text = ""
+  let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+  for (let i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  return text
+}
+
 describe('Lalamove API', () => {
   let body = {
     "serviceType": "MOTORCYCLE",
@@ -86,6 +95,7 @@ describe('Lalamove API', () => {
       amount: _quotation.totalFee
     , currency: _quotation.totalFeeCurrency
     }
+    body.deliveries[0].remarks += makeId()
     return lalamove.postOrder(body).then((result) => {
       _order = result.body
       assert.isDefined(result.body.customerOrderId)
