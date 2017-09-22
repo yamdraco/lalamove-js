@@ -15,8 +15,8 @@ const assert = require('chai').assert,
       }
 
 let makeId = () => {
-  let text = ""
-  let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  let text = ''
+  let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
   for (let i = 0; i < 5; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length))
@@ -25,43 +25,47 @@ let makeId = () => {
 
 describe('Lalamove API', () => {
   let body = {
-    "serviceType": "MOTORCYCLE",
-    "specialRequests": [],
-    "requesterContact": {
-        "name": "Draco Yam",
-        "phone": "+6592344758"
+    'serviceType': 'MOTORCYCLE',
+    'specialRequests': [],
+    'requesterContact': {
+        'name': 'Draco Yam',
+        'phone': '+6592344758'
     },
-    "stops": [
+    'stops': [
         {
-            "location": {"lat": "1.284318", "lng": "103.851335"},
-            "addresses": {
-                "en_SG": {
-                    "displayString": "1 Raffles Place #04-00, One Raffles Place Shopping Mall, Singapore",
-                    "country": "SG"
+            'location': {'lat': '1.284318', 'lng': '103.851335'},
+            'addresses': {
+                'en_SG': {
+                    'displayString': '1 Raffles Place #04-00, One Raffles Place Shopping Mall, Singapore',
+                    'country': 'SG'
                 }
             }
         },
         {
-            "location": {"lat": "1.278578", "lng": "103.851860"},
-            "addresses": {
-                "en_SG": {
-                    "displayString": "Asia Square Tower 1, 8 Marina View, Singapore",
-                    "country": "SG"
+            'location': {'lat': '1.278578', 'lng': '103.851860'},
+            'addresses': {
+                'en_SG': {
+                    'displayString': 'Asia Square Tower 1, 8 Marina View, Singapore',
+                    'country': 'SG'
                 }
             }
         }
     ],
-    "deliveries": [
+    'deliveries': [
         {
-            "toStop": 1,
-            "toContact": {
-                "name": "Brian Garcia",
-                "phone": "+6592344837"
+            'toStop': 1,
+            'toContact': {
+                'name': 'Brian Garcia',
+                'phone': '+6592344837'
             },
-            "remarks": "ORDER #: 1234, ITEM 1 x 1, ITEM 2 x 2"
+            'remarks': 'ORDER #: 1234, ITEM 1 x 1, ITEM 2 x 2'
         }
     ]
   }
+
+  it('should be able to throw error if a config is not passed in', () => {
+    assert.throws(require('../index'), Error, 'configuration file not passed in')
+  })
 
   it('should be able to throw 401 error for invalid key', () => {
     const lalamove = require('../index')({

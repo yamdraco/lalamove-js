@@ -14,10 +14,10 @@ class Lalamove {
    *   - country (country code such as TH, SG, HK, PH, TW)
    */
   constructor(config) {
-    this.host = config.host || ''
-    this.key = config.key || ''
-    this.secret = config.secret || ''
-    this.country = config.country || ''
+    this.host = config.host
+    this.key = config.key
+    this.secret = config.secret
+    this.country = config.country
   }
 
   /**
@@ -94,5 +94,7 @@ class Lalamove {
 }
 
 module.exports = (config) => {
-  return new Lalamove(config || {})
+  if (!config || (!config.key || !config.host || !config.secret || !config.country))
+    throw new Error('configuration file not passed in')
+  return new Lalamove(config)
 }
