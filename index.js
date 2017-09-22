@@ -29,9 +29,9 @@ class Lalamove {
    * @return {String} signature of the request
    */
   getSignature(time, path, body, method) {
-    let _body = JSON.stringify(body)
     let _encryptedStr = `${time.toString()}\r\n${method}\r\n${path}\r\n\r\n`
     if (method !== 'GET') {
+      let _body = JSON.stringify(body)
       _encryptedStr = _encryptedStr + _body
     }
     return cryptoJS.HmacSHA256(_encryptedStr, this.secret)
@@ -90,6 +90,30 @@ class Lalamove {
     return sagent.put(this.host + _path)
       .set(this.getHeader('PUT', _path, body))
       .send(body)
+  }
+
+  /**
+   * Get the status of an order through endpoint of lalamove api
+   * @param {String} customerOrderId 
+   * @return {Q<Object>} Promise object of superagent
+   */
+  getOrderStatus(orderId) {
+    let _path = `/v2/orders/${orderId}`
+    return sagent.get(this.host + _path)
+      .set(this.getHeader('GET', _path))
+  }
+
+  /**
+   * Get the driver information after the order is picked up through 
+   * endpoint of lalamove api
+   * @param {String} customerOrderId
+   * @param {String} driverId
+   * @return {Q<Object>} promise object of superagent
+   */
+  getDriverInfo(orderId, driverId){
+    let _path = `/v2/orders/${orderId}/drivers/${driverId}`
+    return sagent.get(this.host + _path)
+      .set(this.getHeader('GET', _path))
   }
 }
 
