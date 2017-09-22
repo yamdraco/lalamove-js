@@ -107,6 +107,22 @@ describe('Lalamove API', () => {
     })
   })
 
+  it('should be able to get order status', () => {
+    const lalamove = require('../index')(config)
+    return lalamove.getOrderStatus(_order.customerOrderId).then((result) => {
+      assert.isDefined(result.body.driverId)
+      assert.isDefined(result.body.status)
+    })
+  })
+
+  it('should be able to get driver Info', () => {
+    const lalamove = require('../index')(config)
+    return lalamove.getDriverInfo('c5e80dec-9f44-11e7-a723-06bff2d87e1b', '20128').then((result) => {
+      assert.isDefined(result.body.name)
+      assert.isDefined(result.body.phone)
+    })
+  })
+
   it('should be able to cancel order', () => {
     const lalamove = require('../index')(config)
     return lalamove.cancelOrder(_order.customerOrderId).then((result) => {
