@@ -104,14 +104,27 @@ class Lalamove {
   }
 
   /**
-   * Get the driver information after the order is picked up through 
+   * Get the driver information after the order is picked up through
    * endpoint of lalamove api
    * @param {String} customerOrderId
    * @param {String} driverId
    * @return {Q<Object>} promise object of superagent
    */
-  getDriverInfo(orderId, driverId){
+  getDriverInfo(orderId, driverId) {
     let _path = `/v2/orders/${orderId}/drivers/${driverId}`
+    return sagent.get(this.host + _path)
+      .set(this.getHeader('GET', _path))
+  }
+
+  /**
+   * Get the driver location ater the order is picked up through
+   * endpoint of lalamove api
+   * @param {String} customerOrderId
+   * @param {String} driverId
+   * @return {Q<String>} promise object of superagent
+   */
+  getDriverLocation(orderId, driverId) {
+    let _path = `/v2/orders/${orderId}/drivers/${driverId}/location`
     return sagent.get(this.host + _path)
       .set(this.getHeader('GET', _path))
   }

@@ -123,6 +123,14 @@ describe('Lalamove API', () => {
     })
   })
 
+  it('should be able to get driver location', () => {
+    const lalamove = require('../index')(config)
+    return lalamove.getDriverLocation('3dc4959b-8705-11e7-a723-06bff2d87e1b', '21712').then((result) => {
+      assert.isDefined(result.body.location)
+      assert.isDefined(result.body.updatedAt)
+    })
+  })
+
   it('should be able to cancel order', () => {
     const lalamove = require('../index')(config)
     return lalamove.cancelOrder(_order.customerOrderId).then((result) => {
