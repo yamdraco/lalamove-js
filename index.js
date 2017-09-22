@@ -1,6 +1,6 @@
 'use strict'
 
-const sagent = require('superagent'),
+const axios = require('axios'),
       cryptoJS = require('crypto-js'),
       uuid = require('uuid')
 
@@ -29,10 +29,10 @@ class Lalamove {
    * @return {String} signature of the request
    */
   getSignature(time, path, body, method) {
-    let _encryptedStr = `${time.toString()}\r\n${method}\r\n${path}\r\n\r\n`
+    const _encryptedStr = `${time.toString()}\r\n${method}\r\n${path}\r\n\r\n`
     if (method !== 'GET') {
-      let _body = JSON.stringify(body)
-      _encryptedStr = _encryptedStr + _body
+      const _body = JSON.stringify(body)
+      return cryptoJS.HmacSHA256(_encryptedStr + _body, this.secret) 
     }
     return cryptoJS.HmacSHA256(_encryptedStr, this.secret)
   }
@@ -42,14 +42,14 @@ class Lalamove {
    * @param {String} method all in capital letter (POST, GET, PATCH, DELETE, PUT)
    * @param {String} path such as /v2/quotation
    * @param {Object} JSON body
-   * @param {Object} header for Lalamove Restful http request
+   * @param {Object} header for Lalamove Restful http axios
    */
   getHeader(method, path, body) { 
-    let time = new Date().getTime()
+    const time = new Date().getTime()
     return {
       'X-Request-ID': uuid.v4(),
       'Content-type': 'application/json; charset=utf-8',
-      'Authorization': 'hmac ' + this.key + ':' + time + ':' + this.getSignature(time, path, body, method),
+      'Authorization': `hmac ${this.key}:${time}:${this.getSignature(time, path, body, method)}`,
       'Accept': 'application/json',
       'X-LLM-Country': this.country
     }
@@ -58,49 +58,57 @@ class Lalamove {
   /**
    * Call a quotation endpoint of lalamove api
    * @param {Object} Json Object parameters
-   * @return {Q<Object>} promise object of superagent
+   * @return {Q<Object>} promise object of axios
    */
   quotation(body) {
-    let _path = '/v2/quotations'
-    return sagent.post(this.host + _path)
-      .set(this.getHeader('POST', _path, body))
-      .send(body)
+    const _path = '/v2/quotations'
+    const method = 'POST'
+    return axios.post(this.host + _path, body, {
+      headers: this.getHeader(method, _path, body)
+    })
   }
 
   /**
    * Call place order endpoint of lalamove api
    * @param {Object} Json Object parameters
-   * @return {Q<Object>} promise object of superagent
+   * @return {Q<Object>} promise object of axios
    */
   postOrder(body) {
-    let _path = '/v2/orders'
-    return sagent.post(this.host + _path)
-      .set(this.getHeader('POST', _path, body))
-      .send(body)
+    const _path = '/v2/orders'
+    const method = 'POST'
+    return axios.post(this.host + _path, body, {
+      headers: this.getHeader(method, _path, body)
+    })
   }
 
   /**
    * Cancel order endpoint of lalamove api
    * @param {String} orderId of the order to cancel
-   * @return {Q<Object>} promise object of superagent
+   * @return {Q<Object>} promise object of axios
    */
   cancelOrder(orderId) {
-    let _path = `/v2/orders/${orderId}/cancel`,
-        body = {}
-    return sagent.put(this.host + _path)
-      .set(this.getHeader('PUT', _path, body))
-      .send(body)
+    const _path = `/v2/orders/${orderId}/cancel`
+    const body = {}
+    const method = 'PUT'
+    return axios.put(this.host + _path, body, {
+      method,
+      headers: this.getHeader(method, _path, body)
+    })
   }
 
   /**
    * Get the status of an order through endpoint of lalamove api
    * @param {String} customerOrderId 
-   * @return {Q<Object>} Promise object of superagent
+   * @return {Q<Object>} Promise object of axios
    */
   getOrderStatus(orderId) {
-    let _path = `/v2/orders/${orderId}`
-    return sagent.get(this.host + _path)
-      .set(this.getHeader('GET', _path))
+    const _path = `/v2/orders/${orderId}`
+    const body = ''
+    const method = 'GET'
+    return axios.get(this.host + _path, {
+      method,
+      headers: this.getHeader(method, _path, body)
+    })
   }
 
   /**
@@ -108,12 +116,16 @@ class Lalamove {
    * endpoint of lalamove api
    * @param {String} customerOrderId
    * @param {String} driverId
-   * @return {Q<Object>} promise object of superagent
+   * @return {Q<Object>} promise object of axios
    */
   getDriverInfo(orderId, driverId) {
-    let _path = `/v2/orders/${orderId}/drivers/${driverId}`
-    return sagent.get(this.host + _path)
-      .set(this.getHeader('GET', _path))
+    const _path = `/v2/orders/${orderId}/drivers/${driverId}`
+    const body = ''
+    const method = 'GET'
+    return axios.get(this.host + _path, {
+      method,
+      headers: this.getHeader(method, _path, body)
+    })
   }
 
   /**
@@ -121,17 +133,22 @@ class Lalamove {
    * endpoint of lalamove api
    * @param {String} customerOrderId
    * @param {String} driverId
-   * @return {Q<String>} promise object of superagent
+   * @return {Q<String>} promise object of axios
    */
   getDriverLocation(orderId, driverId) {
-    let _path = `/v2/orders/${orderId}/drivers/${driverId}/location`
-    return sagent.get(this.host + _path)
-      .set(this.getHeader('GET', _path))
+    const _path = `/v2/orders/${orderId}/drivers/${driverId}/location`
+    const body = ''
+    const method = 'GET'
+    return axios.get(this.host + _path, {
+      method,
+      headers: this.getHeader(method, _path, body)
+    })
   }
 }
 
 module.exports = (config) => {
-  if (!config || (!config.key || !config.host || !config.secret || !config.country))
-    throw new Error('configuration file not passed in')
+  if (!config || (!config.key || !config.host || !config.secret || !config.country)) {
+    throw new Error('configuration file not passed in')        
+  }
   return new Lalamove(config)
 }

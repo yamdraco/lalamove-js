@@ -74,10 +74,8 @@ describe('Lalamove API', () => {
     , secret: 'abc123'
     , country: 'SG'
     })
-    return lalamove.quotation(body).then(() => {
-      assert.equal('should not be able to call here', '')
-    }).catch((e) => {
-      assert.equal(e.status, 401)
+    return lalamove.quotation(body).then().catch((error) => {
+      assert.equal(error.response.status, 401)
     })
   })
 
@@ -86,9 +84,9 @@ describe('Lalamove API', () => {
     const lalamove = require('../index')(config)
     body.scheduleAt = new Date(new Date().getTime() + 10 * 60000).toISOString()
     return lalamove.quotation(body).then((result) => {
-      _quotation = result.body
-      assert.isDefined(result.body.totalFee)
-      assert.isDefined(result.body.totalFeeCurrency)
+      _quotation = result.data
+      assert.isDefined(result.data.totalFee)
+      assert.isDefined(result.data.totalFeeCurrency)
     })
   })
 
@@ -101,33 +99,33 @@ describe('Lalamove API', () => {
     }
     body.deliveries[0].remarks += makeId()
     return lalamove.postOrder(body).then((result) => {
-      _order = result.body
-      assert.isDefined(result.body.customerOrderId)
-      assert.isDefined(result.body.orderRef)
+      _order = result.data
+      assert.isDefined(result.data.customerOrderId)
+      assert.isDefined(result.data.orderRef)
     })
   })
 
   it('should be able to get order status', () => {
     const lalamove = require('../index')(config)
     return lalamove.getOrderStatus(_order.customerOrderId).then((result) => {
-      assert.isDefined(result.body.driverId)
-      assert.isDefined(result.body.status)
+      assert.isDefined(result.data.driverId)
+      assert.isDefined(result.data.status)
     })
   })
 
   it('should be able to get driver Info', () => {
     const lalamove = require('../index')(config)
     return lalamove.getDriverInfo('c5e80dec-9f44-11e7-a723-06bff2d87e1b', '20128').then((result) => {
-      assert.isDefined(result.body.name)
-      assert.isDefined(result.body.phone)
+      assert.isDefined(result.data.name)
+      assert.isDefined(result.data.phone)
     })
   })
 
   it('should be able to get driver location', () => {
     const lalamove = require('../index')(config)
     return lalamove.getDriverLocation('3dc4959b-8705-11e7-a723-06bff2d87e1b', '21712').then((result) => {
-      assert.isDefined(result.body.location)
-      assert.isDefined(result.body.updatedAt)
+      assert.isDefined(result.data.location)
+      assert.isDefined(result.data.updatedAt)
     })
   })
 
