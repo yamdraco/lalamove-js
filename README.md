@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/yamdraco/lalamove-js.svg?branch=master)](https://travis-ci.org/yamdraco/lalamove-js)
+[![Coverage Status](https://coveralls.io/repos/github/yamdraco/lalamove-js/badge.svg?branch=master)](https://coveralls.io/github/yamdraco/lalamove-js?branch=master)
+
 # Lalamove Unofficial Client Library for Node.js
 ## Library Maintenance
 This library is an unoffical library for lalamove api. Currently we are fixing all necessary bug and adding essential features to ensure the libary continues to meet your needs in accessing the Lalamove APIs. Non-critical issues will be closed. Any issue may be reopened if it is causing ongoing problem.
