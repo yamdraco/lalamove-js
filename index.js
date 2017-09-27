@@ -29,10 +29,10 @@ class Lalamove {
    * @return {String} signature of the request
    */
   getSignature(time, path, body, method) {
-    const _encryptedStr = `${time.toString()}\r\n${method}\r\n${path}\r\n\r\n`
+    let _encryptedStr = `${time.toString()}\r\n${method}\r\n${path}\r\n\r\n`
     if (method !== 'GET') {
-      const _body = JSON.stringify(body)
-      return cryptoJS.HmacSHA256(_encryptedStr + _body, this.secret) 
+      let _body = JSON.stringify(body)
+      _encryptedStr = _encryptedStr + _body
     }
     return cryptoJS.HmacSHA256(_encryptedStr, this.secret)
   }
@@ -89,10 +89,9 @@ class Lalamove {
   cancelOrder(orderId) {
     const _path = `/v2/orders/${orderId}/cancel`
     const body = {}
-    const method = 'PUT'
     return axios.put(this.host + _path, body, {
-      method,
-      headers: this.getHeader(method, _path, body)
+      method: 'PUT',
+      headers: this.getHeader('PUT', _path, body)
     })
   }
 
@@ -103,11 +102,9 @@ class Lalamove {
    */
   getOrderStatus(orderId) {
     const _path = `/v2/orders/${orderId}`
-    const body = ''
-    const method = 'GET'
     return axios.get(this.host + _path, {
-      method,
-      headers: this.getHeader(method, _path, body)
+      method: 'GET',
+      headers: this.getHeader('GET', _path, '')
     })
   }
 
@@ -120,11 +117,9 @@ class Lalamove {
    */
   getDriverInfo(orderId, driverId) {
     const _path = `/v2/orders/${orderId}/drivers/${driverId}`
-    const body = ''
-    const method = 'GET'
     return axios.get(this.host + _path, {
-      method,
-      headers: this.getHeader(method, _path, body)
+      method: 'GET',
+      headers: this.getHeader('GET', _path, '')
     })
   }
 
@@ -137,11 +132,9 @@ class Lalamove {
    */
   getDriverLocation(orderId, driverId) {
     const _path = `/v2/orders/${orderId}/drivers/${driverId}/location`
-    const body = ''
-    const method = 'GET'
     return axios.get(this.host + _path, {
-      method,
-      headers: this.getHeader(method, _path, body)
+      method: 'GET',
+      headers: this.getHeader('GET', _path, '')
     })
   }
 }
