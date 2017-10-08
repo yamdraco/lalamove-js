@@ -88,7 +88,6 @@ class Lalamove {
     const _path = `/v2/orders/${orderId}/cancel`
     const body = {}
     return axios.put(_path, body, {
-      method: 'PUT',
       headers: this.getHeader('PUT', _path, body)
     })
   }
@@ -101,7 +100,6 @@ class Lalamove {
   getOrderStatus(orderId) {
     const _path = `/v2/orders/${orderId}`
     return axios.get(_path, {
-      method: 'GET',
       headers: this.getHeader('GET', _path, '')
     })
   }
@@ -116,7 +114,6 @@ class Lalamove {
   getDriverInfo(orderId, driverId) {
     const _path = `/v2/orders/${orderId}/drivers/${driverId}`
     return axios.get(_path, {
-      method: 'GET',
       headers: this.getHeader('GET', _path, '')
     })
   }
@@ -131,7 +128,6 @@ class Lalamove {
   getDriverLocation(orderId, driverId) {
     const _path = `/v2/orders/${orderId}/drivers/${driverId}/location`
     return axios.get(_path, {
-      method: 'GET',
       headers: this.getHeader('GET', _path, '')
     })
   }
