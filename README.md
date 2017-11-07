@@ -9,7 +9,9 @@ This library is an unoffical library for lalamove api. Currently we are fixing a
 nil
 
 ## Installation
-nil
+```
+npm install lalamove-js
+```
 
 ## How to Submit a bug, issue or feature request
 If you wish to submit a bug, issue, or feature request, then you can find the [issue here](https://github.com/yamdraco/lalamove-js/issues) and you can [create one here](https://github.com/yamdraco/lalamove-js/issues/new). For bug reporting, make sure you provide the following information
@@ -20,6 +22,10 @@ If you wish to submit a bug, issue, or feature request, then you can find the [i
 5. A description of **what actually happened**
 
 ## Releases
-nil
+### 20171107 (v1.0.0)
+* By Draco, Alpha
+* Quotation, Place Order, Cancel API
+* Get Order Info, Driver Info, Location API
+* Continuous Integration setup
 
 
