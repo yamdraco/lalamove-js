@@ -203,7 +203,7 @@ You can cancel the order anytime before a driver is matched with the order and 5
 > Note that this is the time when driver is matched, not the time when the order status is called.
 
 ```javascript
-  var driverInfo = lalamove.getDriverInfo(customerOrderId, driverId)
+  var driverInfo = lalamove.cancelOrder(customerOrderId)
     .then(function (response) {
       return response
     })
